@@ -32,14 +32,6 @@ const Todo = () => {
     setTodo("");
   };
 
-  const handleEdit = (event) => {
-    event.preventDefault();
-    let todoStorage = JSON.parse(localStorage.getItem("todos"));
-    todoStorage[event.target.id] = event.target.value;
-    localStorage.setItem("todos", JSON.stringify(todoStorage));
-    setTodos(todoStorage);
-  };
-
   const handleDelete = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
@@ -94,7 +86,6 @@ const Todo = () => {
               <button onClick={() => handleComplete(todo.id)}>
                 {todo.completed ? "Undo" : "Complete"}
               </button>
-              <button onClick={() => handleEdit(todo.id)}>Edit</button>
               <button onClick={() => handleDelete(todo.id)}>Delete</button>
             </li>
           ))}

@@ -1,0 +1,11 @@
+.btn-register{
+    background-color: #1CB94E;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    margin-top: 10px;
+    display:none;
+}
