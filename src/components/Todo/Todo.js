@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import {Link} from "react-router-dom";
 import "./todo.css";
+import Swal from "sweetalert2";
 
 const Todo = ({isSuccess,setIsSuccess}) => {
   const [todos, setTodos] = useState([]);
@@ -34,12 +35,45 @@ const Todo = ({isSuccess,setIsSuccess}) => {
       setTodo("");
     }
     else {
-      alert("Please login first to add todos!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please login first to Add todos!!',
+      })
     }
   };
 
   const handleDelete = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
+    if(isSuccess) {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            )
+            let todoStorage = JSON.parse(localStorage.getItem("todos"));
+            todoStorage = todoStorage.filter((todo) => todo.id !== id);
+            localStorage.setItem("todos", JSON.stringify(todoStorage));
+            setTodos(todoStorage);
+          }
+        })
+    }
+    else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please login first to Delete todos!!',
+      })
+    }
   };
 
   const handleComplete = (id) => {
@@ -54,10 +88,14 @@ const Todo = ({isSuccess,setIsSuccess}) => {
     );
     }
     else {
-      alert("Please login first to complete todos!");
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please login first to Complete todos!!',
+      })
     }
 
-    let todoStorage = JSON.parse(localStorage.getItem("todos"));
+    let todoStorage;
     //save all todos except the one that is completed
     todoStorage = todos.filter((todo) => todo.id !== id);
     //save the completed todo

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Container, Form, Button, Col} from "react-bootstrap";
 import ExpenseForm from "./ExpenseForm";
 import ExpenseList from "./ExpenseList";
+import Swal from "sweetalert2";
 
 
 const ALL_EXPENSES = localStorage.getItem('expenses')
@@ -43,11 +44,19 @@ const ExpenseApp = ({isSuccess,setIsSuccess}) => {
                setRandomID(randomID + 1)
                setDate('')
            } else {
-               alert('Invalid expense name or the amount')
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Please fill all the fields',
+              })
            }
        }
        else {
-           alert('Please Login To Add expense')
+           Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Please Login First To Add Expense',
+           })
        }
     }
 
@@ -56,11 +65,64 @@ const ExpenseApp = ({isSuccess,setIsSuccess}) => {
     }, [expenses])
 
     const handleClearExpenses = () => {
-        setExpenses([])
+       if (isSuccess) {
+           Swal.fire({
+               title: 'Are you sure?',
+               text: "You won't be able to revert this!",
+               icon: 'warning',
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               confirmButtonText: 'Yes, delete it!'
+           }).then((result) => {
+               if (result.value) {
+                   setExpenses([])
+                   Swal.fire(
+                       'Deleted!',
+                       'Your file has been deleted.',
+                       'success'
+                   )
+               }
+           })
+       }
+       else {
+           Swal.fire({
+               icon: 'error',
+               title: 'Oops...',
+               text: 'Please Login First To Clear Expenses',
+           })
+       }
     }
 
     const handleDeleteExpense = id => {
-        setExpenses(expenses.filter(expense => expense.id !== id))
+        if(isSuccess) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.value) {
+                    const newExpenses = expenses.filter(expense => expense.id !== id)
+                    setExpenses(newExpenses)
+                    Swal.fire(
+                        'Deleted!',
+                        'Your expense has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        }
+        else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please Login First To Delete Expense',
+            })
+        }
     }
 
     //style const

@@ -1,6 +1,7 @@
 import React from 'react';
 import './login.css'
 import {Link} from "react-router-dom";
+import Swal from "sweetalert2";
 const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
 
   const handleChange = (e) => {
@@ -16,7 +17,11 @@ const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
     let storage = JSON.parse(localStorage.getItem('users'))
     let isSuccess = false
     if (userLogin.email === "" || userLogin.password === "") {
-      alert("Please fill all the fields")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill in all the fields!',
+      })
       return false;
     }
     if (storage) {
@@ -31,7 +36,11 @@ const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
       setUserLogin(userLogin)
       setIsSuccess(true)
     } else {
-      alert("Invalid email or password")
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Email or password is incorrect!',
+      })
     }
   }
 

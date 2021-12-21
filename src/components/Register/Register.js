@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import './register.css';
 import {Link, useNavigate} from "react-router-dom";
-
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default function Register ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess, isSuccess})  {
     const navigate = useNavigate();
@@ -15,7 +16,11 @@ export default function Register ({userSign, userLogin, setUserSign, setUserLogi
         e.preventDefault();
         //validation here
         if (email === '' || password === '' || password2 === '') {
-            alert('Please fill in all fields');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill in all fields!',
+            })
             return false;
         }
 
@@ -25,10 +30,21 @@ export default function Register ({userSign, userLogin, setUserSign, setUserLogi
         }
         let userArray = users.filter(user => user.email === email);
         if (userArray.length > 0) {
-            alert('Email already exists');
+           Swal.fire({
+                title: 'Email already exists',
+                text: 'Please try another email',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            })
+            return false;
         } else {
             if (password !== password2) {
-                alert('Passwords do not match');
+                Swal.fire({
+                    title: 'Password not match',
+                    text: 'Please try again',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             } else {
                 setIsSuccess(true);
                 users.push({
