@@ -1,5 +1,6 @@
 import React from 'react';
-
+import './login.css'
+import {Link} from "react-router-dom";
 const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
 
   const handleChange = (e) => {
@@ -34,6 +35,8 @@ const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
     }
   }
 
+
+
   return (
     <div className="login">
       <div className="login-container">
@@ -52,6 +55,9 @@ const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
             </div>
             <div className="form-group">
               <button type="submit">Login</button>
+              <p>
+                don't have an account? <Link to="/register">Register</Link>
+              </p>
             </div>
           </form>
         </div>

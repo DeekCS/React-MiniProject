@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import './register.css';
+import {Link, useNavigate} from "react-router-dom";
 
-const Register = ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess, isSuccess}) => {
 
+export default function Register ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess, isSuccess})  {
+    const navigate = useNavigate();
     const {name, email, password, password2} = userSign;
 
     const onChange = (e) => {
@@ -35,6 +37,9 @@ const Register = ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess,
                     password,
                 });
                 localStorage.setItem('users', JSON.stringify(users));
+                // setUserLogin({...userLogin, email, password});
+                navigate('/login');
+
             }
         }
     }
@@ -55,9 +60,9 @@ const Register = ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess,
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-8 m-auto'>
-                        <h1 className='display-4 text-center'>Sign Up</h1>
+                        <h1 className='display-2 text-center'>Sign Up</h1>
                         <p className='lead text-center'>
-                            Create your DevConnector account
+                            Create your account
                         </p>
                         <form onSubmit={onSubmit}>
                             <div className='form-group'>
@@ -111,11 +116,10 @@ const Register = ({userSign, userLogin, setUserSign, setUserLogin, setIsSuccess,
                             </div>
                             <input type='submit' className='btn btn-info  mt-4'/>
                         </form>
+                        already have an account? <Link to="/login">Login</Link>
                     </div>
                 </div>
             </div>
         </div>
     );
 }
-
-export default Register;

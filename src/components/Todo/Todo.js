@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./todo.css";
 
-const Todo = () => {
+const Todo = ({isSuccess,setIsSuccess}) => {
   const [todos, setTodos] = useState([]);
   const [todo, setTodo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -12,24 +12,29 @@ const Todo = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let todoStorage = JSON.parse(localStorage.getItem("todos"));
-    if (todoStorage) {
-      todoStorage.push(todo);
-      localStorage.setItem("todos", JSON.stringify(todoStorage));
-    } else {
-      localStorage.setItem("todos", JSON.stringify([todo]));
+    if (isSuccess) {
+      let todoStorage = JSON.parse(localStorage.getItem("todos"));
+      if (todoStorage) {
+        todoStorage.push(todo);
+        localStorage.setItem("todos", JSON.stringify(todoStorage));
+      } else {
+        localStorage.setItem("todos", JSON.stringify([todo]));
+      }
+      setTodos(todoStorage);
+      setTodo("");
+      setTodos([
+        ...todos,
+        {
+          id: todos.length + 1,
+          title: todo,
+          completed: false,
+        },
+      ]);
+      setTodo("");
     }
-    setTodos(todoStorage);
-    setTodo("");
-    setTodos([
-      ...todos,
-      {
-        id: todos.length + 1,
-        title: todo,
-        completed: false,
-      },
-    ]);
-    setTodo("");
+    else {
+      alert("Please login first to add todos!");
+    }
   };
 
   const handleDelete = (id) => {
@@ -37,6 +42,7 @@ const Todo = () => {
   };
 
   const handleComplete = (id) => {
+    if(isSuccess) {
     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
@@ -45,6 +51,10 @@ const Todo = () => {
         return todo;
       })
     );
+    }
+    else {
+      alert("Please login first to complete todos!");
+    }
 
     let todoStorage = JSON.parse(localStorage.getItem("todos"));
     //save all todos except the one that is completed
@@ -55,10 +65,13 @@ const Todo = () => {
     localStorage.setItem("todos", JSON.stringify(todoStorage));
   };
 
-  //useeffect to get data from local storage
   useEffect(() => {
+    setIsLoading(true);
     let todoStorage = JSON.parse(localStorage.getItem("todos"));
-    setTodos(todoStorage);
+    if (todoStorage) {
+      setTodos(todoStorage);
+    }
+    setIsLoading(false);
   }, []);
 
   return (
@@ -74,13 +87,15 @@ const Todo = () => {
         />
         <button type="submit">Add</button>
       </form>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
+      {todos.length > 0 ? (
         <ul>
           {todos.map((todo) => (
             <li key={todo.id}>
-              <span className={todo.completed ? "completed" : ""}>
+              <span
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "none",
+                }}
+              >
                 {todo.title}
               </span>
               <button onClick={() => handleComplete(todo.id)}>
@@ -90,7 +105,10 @@ const Todo = () => {
             </li>
           ))}
         </ul>
-      )}
+      ):<>
+        <h2>No todos yet!</h2>
+        <h3>Add a todo to get started!</h3>
+      </>}
     </div>
   );
 };

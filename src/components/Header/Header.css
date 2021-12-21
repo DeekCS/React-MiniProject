@@ -1,0 +1,26 @@
+.header{
+  background: #333;
+  color: #fff;
+  /*// textAlign: 'center',*/
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.nav-item {
+  color: #fff;
+  display: inline-block;
+  padding: 10px;
+  cursor: pointer;
+
+}
+.nav-item:hover {
+  background: #fff;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+}
