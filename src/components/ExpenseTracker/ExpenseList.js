@@ -14,7 +14,7 @@ const ExpenseList = ({ expenses,handleDeleteExpense }) => {
   )
 
   return (
-      <Container>
+      <Container className="mt-5">
         <Table striped bordered hover>
           <thead>
           <tr>

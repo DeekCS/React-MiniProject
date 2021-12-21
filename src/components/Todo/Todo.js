@@ -76,22 +76,26 @@ const Todo = ({isSuccess,setIsSuccess}) => {
   }, []);
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="todo-container container">
+      <h1 className="mt-5">Todo List</h1>
+      <form className="todo-form " onSubmit={handleSubmit}>
         <input
           type="text"
           value={todo}
           name="todo"
           onChange={handleChange}
           required
+          placeholder={isSuccess ? "Add Todo" : "Login to add todos"}
+          className="form-control w-50"
         />
-        <button type="submit">Add</button>
+        <button className="btn btn-primary m-5" type="submit">Add</button>
       </form>
       {todos.length > 0 ? (
-        <ul>
+          <div className="row">
+        <ul className="list-group">
           {todos.map((todo) => (
-            <li key={todo.id}>
+
+            <li className="list-group-item  w-100 todo-item col-md-4" key={todo.id}>
               <span
                 style={{
                   textDecoration: todo.completed ? "line-through" : "none",
@@ -101,21 +105,22 @@ const Todo = ({isSuccess,setIsSuccess}) => {
               </span>
               {
                 todo.completed?
-                <button className="btn btn-warning" onClick={() => handleComplete(todo.id)}>
+                <button className="btn btn-warning m-2" onClick={() => handleComplete(todo.id)}>
                   <i className="fas fa-redo"/>
                 </button>
                 :
-                <button className="btn btn-success" onClick={() => handleComplete(todo.id)}>
+                <button className="btn btn-success m-2" onClick={() => handleComplete(todo.id)}>
                   <i className="fas fa-check"/>
                 </button>
 
               }
-              <button className="btn btn-danger" onClick={() => handleDelete(todo.id)}>
+              <button className="btn btn-danger m-2" onClick={() => handleDelete(todo.id)}>
                 <i className="fas fa-trash"/>
               </button>
             </li>
           ))}
         </ul>
+            </div>
       ):<>
         <h2>No todos yet!</h2>
         <h3>Add a todo to get started!</h3>
@@ -125,8 +130,3 @@ const Todo = ({isSuccess,setIsSuccess}) => {
 };
 
 export default Todo;
-
-/*
- <i v-if="todo.done" class="fas fa-redo"></i>
- <i v-else class="fas fa-check"></i>
- */

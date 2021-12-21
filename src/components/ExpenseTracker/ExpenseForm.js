@@ -49,11 +49,11 @@ const ExpenseForm = ({ name, amount, handleName, handleAmount, handleSubmitForm 
           <Input type="date" name="date" id="expenseDate" onChange={handleDate}/>
         </Col>
       </FormGroup>
-      <Button type="submit" color="primary">
-        Add
+      <Button type="submit" color="primary" className="m-3">
+        Add Expense
       </Button>
       <Button color="danger" onClick={handleClearExpenses}>
-        Delete
+        Clear Expenses
       </Button>
     </BTForm>
 )

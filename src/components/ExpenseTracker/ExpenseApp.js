@@ -63,12 +63,19 @@ const ExpenseApp = ({isSuccess,setIsSuccess}) => {
         setExpenses(expenses.filter(expense => expense.id !== id))
     }
 
+    //style const
+    const style = {
+       fontSize: '1.5rem',
+       fontWeight: '500',
+        marginTop: '1rem',
+        marginBottom: '2rem'
+    }
     return (
-        <Container className="text-center">
-            <div className="bg-info ">
+        <Container className="text-center mt-5 border-warning ">
+            <div className="bg-light py-5">
                 <h1>Expense Tracker</h1>
                 <div>
-                    <p>
+                    <p style={style}>
                         Total Expense:{' '}
                         <span className="text-success">
                           ${' '}
