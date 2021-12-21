@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+
 import "./todo.css";
 
 const Todo = ({isSuccess,setIsSuccess}) => {
@@ -98,10 +99,20 @@ const Todo = ({isSuccess,setIsSuccess}) => {
               >
                 {todo.title}
               </span>
-              <button onClick={() => handleComplete(todo.id)}>
-                {todo.completed ? "Undo" : "Complete"}
+              {
+                todo.completed?
+                <button className="btn btn-warning" onClick={() => handleComplete(todo.id)}>
+                  <i className="fas fa-redo"/>
+                </button>
+                :
+                <button className="btn btn-success" onClick={() => handleComplete(todo.id)}>
+                  <i className="fas fa-check"/>
+                </button>
+
+              }
+              <button className="btn btn-danger" onClick={() => handleDelete(todo.id)}>
+                <i className="fas fa-trash"/>
               </button>
-              <button onClick={() => handleDelete(todo.id)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -114,3 +125,8 @@ const Todo = ({isSuccess,setIsSuccess}) => {
 };
 
 export default Todo;
+
+/*
+ <i v-if="todo.done" class="fas fa-redo"></i>
+ <i v-else class="fas fa-check"></i>
+ */
