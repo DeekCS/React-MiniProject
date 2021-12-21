@@ -57,6 +57,13 @@ export default function Register ({userSign, userLogin, setUserSign, setUserLogi
                 navigate('/todo');
 
             }
+
+            setUserSign({
+                name: '',
+                email: '',
+                password: '',
+                password2: ''
+            });
         }
     }
 
