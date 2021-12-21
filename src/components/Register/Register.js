@@ -54,7 +54,7 @@ export default function Register ({userSign, userLogin, setUserSign, setUserLogi
                 });
                 localStorage.setItem('users', JSON.stringify(users));
                 // setUserLogin({...userLogin, email, password});
-                navigate('/login');
+                navigate('/todo');
 
             }
         }

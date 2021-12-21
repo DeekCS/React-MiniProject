@@ -1,9 +1,11 @@
 import React from 'react';
 import './login.css'
-import {Link} from "react-router-dom";
+import {Link,useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
-const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
 
+
+const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setUserLogin({...userLogin, [e.target.name]: e.target.value})
   }
@@ -29,6 +31,10 @@ const Login = ({userLogin,setUserLogin,isSuccess,setIsSuccess}) => {
         if (user.email === userLogin.email && user.password === userLogin.password) {
           isSuccess = true
           console.log("Login success")
+          localStorage.setItem('user', JSON.stringify(user))
+          localStorage.setItem('isLogin', true)
+          setIsSuccess(true)
+          navigate('/todo')
         }
       })
     }
